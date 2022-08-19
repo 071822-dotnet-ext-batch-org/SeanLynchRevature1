@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Class1
+    public class ApprovalDTO
     {
+        public Guid EmployeeID { get; set; }
+        public Guid RequestID { get; set; }
+        public int Status { get; set; }
     }
 }
