@@ -16,11 +16,22 @@ public class APIController : ControllerBase
         this._Business = new BusinessProgram();
     }
 
-    //
-    //
-    //
-    //
-    //
+    [HttpPost("Login (username, password)")]
+    public async Task<LoginDTO>LoginAsync(string EmailGrab, int PasswordSet)
+    {
+        LoginDTO TakeEandP = await this._Business.LoginAsync(EmailGrab, PasswordSet);
+        return TakeEandP;
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    
+
     [HttpGet("RequestsAsync")]
     [HttpGet("RequestsAsync/{type}")]
     //[HttpGet("RequestsAsync/{type}/{id}")]
@@ -61,6 +72,15 @@ public class APIController : ControllerBase
         }
         else return Conflict(Ticketobject);
 
+    }
+
+    //Part 2
+
+    [HttpPost("NewAccount")]
+    public async Task<ActionResult<EmployeesDTO>> NewGuyAsync(EmployeesDTO NewGuy)
+    {
+        EmployeesDTO TheNewGuy = await this._Business.EmployeesAsync(NewGuy);
+        return TheNewGuy;
     }
 
 

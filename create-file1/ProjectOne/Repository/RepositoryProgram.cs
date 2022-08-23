@@ -105,6 +105,33 @@ namespace Repository
                 return false;
             }
         }
+        public async Task<EmployeesDTO> NewGuyAsync(EmployeesDTO newGuy)
+        {
+            SqlConnection connection = new SqlConnection("Server=tcp:seaneosserver.database.windows.net,1433;Initial Catalog=sean_lynch_revature_server;Persist Security Info=False;User ID=SeaneoLynch;Password=Xeaneo2412$$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            using (SqlCommand command = new SqlCommand($"UPDATE Employees SET EmployeeID = @EmployeeID, FirstName = @FirstName, LastName = @LastName, IsManager = @IsManager, Email = @Email, Password = @Password WHERE Email = @Email IF @@ROWCOUNT = 0 INSERT INTO Employees EmployeeID = @EmployeeID, FirstName = @FirstName, LastName = @LastName, IsManager = @IsManager, Email = @Email, Password = @Password", connection))
+            {
+                command.Parameters.AddWithValue("@EmployeeID", newGuy.EmployeeID);
+                command.Parameters.AddWithValue("@FirstName", newGuy.FirstName);
+                command.Parameters.AddWithValue("@LastName", newGuy.LastName);
+                command.Parameters.AddWithValue("@IsManager", newGuy.IsManager);
+                command.Parameters.AddWithValue("@Email", newGuy.Email);
+                command.Parameters.AddWithValue("@Password", newGuy.Password);
+                connection.Open();
+                int Ret = await command.ExecuteNonQueryAsync();
+                if (Ret > 0)
+                {
+                    return newGuy;
+                }
+                connection.Close();
+                return null;
+            }
+            
+        }
+
+        public Task<LoginDTO> LoginAsync(string emailGrab, int passwordSet)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
